@@ -7,9 +7,20 @@ import { checkNote, type Note } from './actions';
 export default function Home() {
   const [notes, setNotes] = useState<Note[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
   const formRef = useRef<HTMLFormElement>(null);
+
+  // Derive unique tags from all notes
+  const allTags = Array.from(
+    new Set(notes.flatMap((note) => note.tags))
+  ).sort();
+
+  // Filter notes by selected tag
+  const filteredNotes = selectedTag
+    ? notes.filter((note) => note.tags.includes(selectedTag))
+    : notes;
 
   // Read localStorage inside useEffect, not during first render (as per SPEC)
   useEffect(() => {
@@ -230,14 +241,60 @@ export default function Home() {
 
         {/* Notes List */}
         <section className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
-              Saved Notes
-              <span className="text-xs px-2 py-0.5 rounded-full bg-zinc-200/80 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 font-medium">
-                {notes.length}
-              </span>
-            </h2>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
+                Saved Notes
+                <span className="text-xs px-2 py-0.5 rounded-full bg-zinc-200/80 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 font-medium">
+                  {selectedTag ? `${filteredNotes.length} of ${notes.length}` : notes.length}
+                </span>
+              </h2>
+              {selectedTag && (
+                <span className="text-xs text-indigo-600 dark:text-indigo-400 font-medium bg-indigo-50 dark:bg-indigo-950/60 px-2 py-0.5 rounded-md border border-indigo-200/60 dark:border-indigo-800/60">
+                  #{selectedTag}
+                </span>
+              )}
+            </div>
           </div>
+
+          {/* Tags Filter Bar */}
+          {allTags.length > 0 && (
+            <div className="flex flex-wrap items-center gap-1.5 p-3 rounded-xl bg-white/60 dark:bg-zinc-900/60 border border-zinc-200/80 dark:border-zinc-800/80">
+              <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400 mr-1">
+                Filter by tag:
+              </span>
+              <button
+                type="button"
+                id="tag-filter-all"
+                onClick={() => setSelectedTag(null)}
+                className={`px-3 py-1 rounded-lg text-xs font-medium transition-all duration-150 cursor-pointer ${
+                  selectedTag === null
+                    ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 shadow-xs font-semibold'
+                    : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700'
+                }`}
+              >
+                All
+              </button>
+              {allTags.map((tag) => (
+                <button
+                  key={tag}
+                  type="button"
+                  id={`tag-filter-${tag}`}
+                  onClick={() => setSelectedTag(tag === selectedTag ? null : tag)}
+                  className={`px-3 py-1 rounded-lg text-xs font-medium transition-all duration-150 cursor-pointer flex items-center gap-1.5 ${
+                    selectedTag === tag
+                      ? 'bg-indigo-600 text-white shadow-xs shadow-indigo-500/30 font-semibold'
+                      : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700'
+                  }`}
+                >
+                  <span>#{tag}</span>
+                  {selectedTag === tag && (
+                    <span className="text-[10px] opacity-75">✕</span>
+                  )}
+                </button>
+              ))}
+            </div>
+          )}
 
           {notes.length === 0 ? (
             <div className="text-center py-12 px-4 rounded-2xl border border-dashed border-zinc-300 dark:border-zinc-800 bg-white/40 dark:bg-zinc-900/40">
@@ -261,9 +318,22 @@ export default function Home() {
                 No notes yet. Create your first note using the form above!
               </p>
             </div>
+          ) : filteredNotes.length === 0 ? (
+            <div className="text-center py-10 px-4 rounded-2xl border border-dashed border-zinc-300 dark:border-zinc-800 bg-white/40 dark:bg-zinc-900/40 space-y-2">
+              <p className="text-zinc-500 dark:text-zinc-400 text-sm">
+                No notes match tag <span className="font-semibold text-indigo-600 dark:text-indigo-400">#{selectedTag}</span>.
+              </p>
+              <button
+                type="button"
+                onClick={() => setSelectedTag(null)}
+                className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline font-medium cursor-pointer"
+              >
+                Clear filter (show All)
+              </button>
+            </div>
           ) : (
             <div className="space-y-3">
-              {notes.map((note) => (
+              {filteredNotes.map((note) => (
                 <article
                   key={note.id}
                   className="p-5 rounded-2xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-zinc-900 shadow-xs space-y-2.5 transition-all duration-200 hover:shadow-md hover:border-zinc-300 dark:hover:border-zinc-700 hover:-translate-y-0.5"
@@ -342,12 +412,19 @@ export default function Home() {
                   {note.tags.length > 0 && (
                     <div className="flex flex-wrap gap-1.5 pt-2">
                       {note.tags.map((tag) => (
-                        <span
+                        <button
                           key={tag}
-                          className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-zinc-100 dark:bg-zinc-800/90 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700/80 transition-colors"
+                          type="button"
+                          onClick={() => setSelectedTag(tag === selectedTag ? null : tag)}
+                          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium transition-colors cursor-pointer ${
+                            selectedTag === tag
+                              ? 'bg-indigo-600 text-white border border-indigo-600 shadow-xs'
+                              : 'bg-zinc-100 dark:bg-zinc-800/90 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700/80 hover:border-indigo-400 dark:hover:border-indigo-500'
+                          }`}
+                          title={`Filter notes by #${tag}`}
                         >
                           #{tag}
-                        </span>
+                        </button>
                       ))}
                     </div>
                   )}
