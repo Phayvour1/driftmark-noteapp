@@ -72,6 +72,10 @@ export default function Home() {
     });
   };
 
+  const handleDelete = (id: string) => {
+    setNotes((prev) => prev.filter((note) => note.id !== id));
+  };
+
   return (
     <div className="min-h-screen bg-linear-to-b from-zinc-50 via-white to-zinc-100 dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950 text-zinc-900 dark:text-zinc-100 py-10 px-4 sm:px-6 lg:px-8 selection:bg-indigo-500 selection:text-white transition-colors duration-300">
       <main className="max-w-2xl mx-auto space-y-8">
@@ -420,9 +424,34 @@ export default function Home() {
                   key={note.id}
                   className="p-5 rounded-2xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-zinc-900 shadow-xs space-y-2.5 transition-all duration-200 hover:shadow-md hover:border-zinc-300 dark:hover:border-zinc-700 hover:-translate-y-0.5"
                 >
-                  <h3 className="text-lg font-semibold text-zinc-900 dark:text-white">
-                    {note.title}
-                  </h3>
+                  <div className="flex items-start justify-between gap-3">
+                    <h3 className="text-lg font-semibold text-zinc-900 dark:text-white">
+                      {note.title}
+                    </h3>
+                    <button
+                      type="button"
+                      id={`delete-note-${note.id}`}
+                      onClick={() => handleDelete(note.id)}
+                      className="text-zinc-400 hover:text-red-600 dark:hover:text-red-400 p-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors cursor-pointer shrink-0"
+                      aria-label={`Delete note: ${note.title}`}
+                      title="Delete note"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-4 h-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                        />
+                      </svg>
+                    </button>
+                  </div>
 
                   <div className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed break-words">
                     <ReactMarkdown
