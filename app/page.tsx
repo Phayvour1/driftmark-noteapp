@@ -142,6 +142,19 @@ export default function Home() {
     tagsInputRef.current.focus();
   };
 
+  // Preload an inspiring starter template for easy capture
+  const applyStarter = (title: string, body: string, tags: string) => {
+    setTitleDraft(title);
+    setBodyDraft(body);
+    if (tagsInputRef.current) {
+      tagsInputRef.current.value = tags;
+    }
+    setActiveTab('write');
+    setTimeout(() => {
+      bodyTextareaRef.current?.focus();
+    }, 50);
+  };
+
   // Quick word & char stats
   const wordCount = bodyDraft.trim() ? bodyDraft.trim().split(/\s+/).length : 0;
   const charCount = bodyDraft.length;
@@ -190,18 +203,77 @@ export default function Home() {
                   </span>
                 </div>
                 <p className="mt-1 text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                  Your calm digital harbor for fleeting thoughts, daily notes & markdown ideas.
+                  Your calm digital harbor — bring your scattered WhatsApp chats, paper scribbles & phone notes into one serene place.
                 </p>
               </div>
             </div>
 
-            {/* Quick stats indicator */}
-            <div className="hidden sm:flex items-center gap-2 self-start sm:self-center px-3 py-1.5 rounded-xl bg-blue-50/80 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-900/40 text-xs text-blue-700 dark:text-blue-300 font-medium">
+            {/* Reassuring local storage badge */}
+            <div className="flex items-center gap-2 self-start sm:self-center px-3 py-1.5 rounded-xl bg-blue-50/80 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-900/40 text-xs text-blue-700 dark:text-blue-300 font-medium">
               <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" viewBox="0 0 20 20" fill="currentColor">
                 <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" />
               </svg>
-              <span>{notes.length} {notes.length === 1 ? 'note' : 'notes'} saved</span>
+              <span>{notes.length} {notes.length === 1 ? 'thought saved' : 'thoughts saved'}</span>
             </div>
+          </div>
+
+          {/* Inspiring Thought Starter Chips */}
+          <div className="mt-4 pt-3.5 border-t border-blue-100/60 dark:border-blue-950/60 flex flex-wrap items-center gap-2">
+            <span className="text-[11px] font-semibold text-blue-800/80 dark:text-blue-400/90 flex items-center gap-1">
+              ✨ Need inspiration?
+            </span>
+            <button
+              type="button"
+              onClick={() =>
+                applyStarter(
+                  'Shopping',
+                  '# This week\n- **rice**\n- olive oil\n- fresh tomatoes',
+                  'home, food'
+                )
+              }
+              className="text-xs px-2.5 py-1 rounded-lg bg-blue-50/90 hover:bg-blue-100 dark:bg-blue-950/60 dark:hover:bg-blue-900 text-blue-700 dark:text-blue-300 border border-blue-200/60 dark:border-blue-800/60 transition-all cursor-pointer font-medium"
+            >
+              🛒 Shopping List
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                applyStarter(
+                  'Sunday Sermon Reflection',
+                  '# Sermon Takeaways\n- **Scripture:** \n- **Core Message:** \n- **Personal Action:** ',
+                  'church, reflection'
+                )
+              }
+              className="text-xs px-2.5 py-1 rounded-lg bg-blue-50/90 hover:bg-blue-100 dark:bg-blue-950/60 dark:hover:bg-blue-900 text-blue-700 dark:text-blue-300 border border-blue-200/60 dark:border-blue-800/60 transition-all cursor-pointer font-medium"
+            >
+              ⛪ Sunday Sermon
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                applyStarter(
+                  'Meeting Takeaways',
+                  '# Project Standup\n- **Decisions made:** \n- **Blockers:** \n- **Next steps for this week:** ',
+                  'work, sprint'
+                )
+              }
+              className="text-xs px-2.5 py-1 rounded-lg bg-blue-50/90 hover:bg-blue-100 dark:bg-blue-950/60 dark:hover:bg-blue-900 text-blue-700 dark:text-blue-300 border border-blue-200/60 dark:border-blue-800/60 transition-all cursor-pointer font-medium"
+            >
+              💼 Meeting Takeaways
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                applyStarter(
+                  'Quick Idea Spark',
+                  '# Random Brainstorm\n- **The idea:** \n- **Why it matters:** \n- **Who to ask:** ',
+                  'ideas, sparks'
+                )
+              }
+              className="text-xs px-2.5 py-1 rounded-lg bg-blue-50/90 hover:bg-blue-100 dark:bg-blue-950/60 dark:hover:bg-blue-900 text-blue-700 dark:text-blue-300 border border-blue-200/60 dark:border-blue-800/60 transition-all cursor-pointer font-medium"
+            >
+              💡 Quick Idea
+            </button>
           </div>
         </header>
 
@@ -211,10 +283,10 @@ export default function Home() {
             <div>
               <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
                 <span className="flex h-2 w-2 rounded-full bg-blue-600 shadow-sm shadow-blue-500/50" />
-                Capture a Note
+                Capture a Thought
               </h2>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                Organize your thoughts with titles, rich Markdown & tags.
+                Jot down anything on your mind before it slips away. We&apos;ll keep it safe on this device.
               </p>
             </div>
 
@@ -282,19 +354,24 @@ export default function Home() {
           <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
             {/* Title Input */}
             <div>
-              <label
-                htmlFor="note-title"
-                className="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5"
-              >
-                Note Title <span className="text-blue-500">*</span>
-              </label>
+              <div className="flex items-center justify-between mb-1.5">
+                <label
+                  htmlFor="note-title"
+                  className="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300"
+                >
+                  Give your note a title <span className="text-blue-500">*</span>
+                </label>
+                <span className="text-[11px] text-slate-400 dark:text-slate-500">
+                  Short & memorable
+                </span>
+              </div>
               <input
                 id="note-title"
                 name="title"
                 type="text"
                 value={titleDraft}
                 onChange={(e) => setTitleDraft(e.target.value)}
-                placeholder="e.g. Weekly Shopping, Team Sprint Notes, Bible Study..."
+                placeholder="e.g. Shopping, Sunday Sermon Notes, WhatsApp Recipe..."
                 className="w-full px-4 py-2.5 rounded-xl border border-blue-100 dark:border-blue-900/60 bg-blue-50/30 dark:bg-slate-800/40 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-hidden focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 text-base sm:text-sm transition-all duration-150 min-h-[44px]"
               />
             </div>
@@ -306,7 +383,7 @@ export default function Home() {
                   htmlFor="note-body"
                   className="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300"
                 >
-                  Markdown Content <span className="text-blue-500">*</span>
+                  Write the note <span className="text-blue-500">*</span>
                 </label>
 
                 {/* Markdown Quick Toolbar */}
@@ -364,7 +441,7 @@ export default function Home() {
                   rows={5}
                   value={bodyDraft}
                   onChange={(e) => setBodyDraft(e.target.value)}
-                  placeholder="Write your note here... Use # for headings, **bold** for emphasis, - for bullet lists, or [links](url)."
+                  placeholder="Type your thoughts here... Use # for headings, **bold** for key points, or - for checklists."
                   className="w-full px-4 py-3 rounded-xl border border-blue-100 dark:border-blue-900/60 bg-blue-50/30 dark:bg-slate-800/40 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-hidden focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 text-base sm:text-sm resize-y font-mono transition-all duration-150 min-h-[130px] leading-relaxed"
                 />
               ) : (
@@ -415,7 +492,7 @@ export default function Home() {
                     </div>
                   ) : (
                     <p className="text-xs text-slate-400 dark:text-slate-500 italic py-6 text-center">
-                      Markdown preview will appear here as you type...
+                      Live preview ready — start typing on the Write tab and your formatted note will appear here!
                     </p>
                   )}
                 </div>
@@ -423,34 +500,39 @@ export default function Home() {
 
               {/* Word & Char Count */}
               <div className="flex items-center justify-between mt-1 text-[11px] text-slate-400 dark:text-slate-500 px-1">
-                <span>{wordCount} {wordCount === 1 ? 'word' : 'words'} · {charCount} chars</span>
-                <span className="hidden sm:inline">Tip: # Heading · **Bold** · - List</span>
+                <span>{wordCount} {wordCount === 1 ? 'word' : 'words'} · {charCount} characters</span>
+                <span className="hidden sm:inline">Supports headings, bold, bullet lists & links</span>
               </div>
             </div>
 
             {/* Tags Input */}
             <div>
-              <label
-                htmlFor="note-tags"
-                className="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1"
-              >
-                Tags <span className="text-xs font-normal text-slate-500 dark:text-slate-400">(comma-separated)</span>
-              </label>
+              <div className="flex items-center justify-between mb-1">
+                <label
+                  htmlFor="note-tags"
+                  className="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300"
+                >
+                  Add tags to group this note
+                </label>
+                <span className="text-[11px] text-slate-500 dark:text-slate-400">
+                  comma-separated
+                </span>
+              </div>
               <input
                 ref={tagsInputRef}
                 id="note-tags"
                 name="tags"
                 type="text"
-                placeholder="e.g. work, church, ideas, home"
+                placeholder="e.g. work, church, home, ideas, reading"
                 className="w-full px-4 py-2.5 rounded-xl border border-blue-100 dark:border-blue-900/60 bg-blue-50/30 dark:bg-slate-800/40 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-hidden focus:bg-white dark:focus:bg-slate-800 focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 text-base sm:text-sm transition-all duration-150 min-h-[44px]"
               />
 
               {/* Quick Tag suggestions */}
               <div className="flex flex-wrap items-center gap-1.5 mt-2">
                 <span className="text-[11px] text-slate-400 dark:text-slate-500 mr-1">
-                  Quick tags:
+                  Common tags:
                 </span>
-                {['work', 'personal', 'church', 'ideas', 'reading'].map((tag) => (
+                {['home', 'food', 'work', 'church', 'ideas'].map((tag) => (
                   <button
                     key={tag}
                     type="button"
@@ -488,7 +570,7 @@ export default function Home() {
                         d="M4 12a8 8 0 018-8v8H4z"
                       />
                     </svg>
-                    <span>Saving Note...</span>
+                    <span>Saving your thought...</span>
                   </>
                 ) : (
                   <>
@@ -511,18 +593,23 @@ export default function Home() {
         {/* Saved Notes Section */}
         <section className="space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div className="flex items-center gap-2">
-              <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                <span>Saved Notes</span>
-                <span className="text-xs px-2.5 py-0.5 rounded-full bg-blue-100/80 dark:bg-blue-950 text-blue-700 dark:text-blue-300 font-semibold border border-blue-200/60 dark:border-blue-900/60">
-                  {selectedTag || searchQuery ? `${filteredNotes.length} of ${notes.length}` : notes.length}
-                </span>
-              </h2>
-              {selectedTag && (
-                <span className="text-xs text-blue-700 dark:text-blue-300 font-semibold bg-blue-50 dark:bg-blue-950/80 px-2.5 py-0.5 rounded-full border border-blue-200 dark:border-blue-800">
-                  #{selectedTag}
-                </span>
-              )}
+            <div>
+              <div className="flex items-center gap-2">
+                <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                  <span>Saved Notes</span>
+                  <span className="text-xs px-2.5 py-0.5 rounded-full bg-blue-100/80 dark:bg-blue-950 text-blue-700 dark:text-blue-300 font-semibold border border-blue-200/60 dark:border-blue-900/60">
+                    {selectedTag || searchQuery ? `${filteredNotes.length} of ${notes.length}` : notes.length}
+                  </span>
+                </h2>
+                {selectedTag && (
+                  <span className="text-xs text-blue-700 dark:text-blue-300 font-semibold bg-blue-50 dark:bg-blue-950/80 px-2.5 py-0.5 rounded-full border border-blue-200 dark:border-blue-800">
+                    #{selectedTag}
+                  </span>
+                )}
+              </div>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 hidden sm:block">
+                Safely saved in your browser — they will still be here when you come back tomorrow.
+              </p>
             </div>
 
             {/* Search Input Bar */}
@@ -571,7 +658,7 @@ export default function Home() {
                 <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
                 </svg>
-                Filter:
+                Filter by topic:
               </span>
               <button
                 type="button"
@@ -626,10 +713,10 @@ export default function Home() {
                 </svg>
               </div>
               <h3 className="text-base font-semibold text-slate-800 dark:text-slate-200">
-                Your notes list is clean and calm
+                Your notes harbor is peaceful & ready
               </h3>
               <p className="text-slate-500 dark:text-slate-400 text-sm max-w-sm mx-auto mt-1">
-                No notes in your harbor yet. Write your thoughts above and press &ldquo;Save Note&rdquo; to begin!
+                No scattered messages or lost paper slips. Pick an inspiration prompt above or write your first thought to begin!
               </p>
             </div>
           ) : filteredNotes.length === 0 ? (
@@ -657,10 +744,10 @@ export default function Home() {
                 </p>
                 <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm mt-1 max-w-md mx-auto">
                   {searchQuery && selectedTag
-                    ? `No notes match "${searchQuery}" under tag #${selectedTag}.`
+                    ? `We looked through your titles and notes for "${searchQuery}" under #${selectedTag}, but couldn't find a match.`
                     : searchQuery
-                    ? `No notes match "${searchQuery}". Try searching for another keyword or phrase.`
-                    : `No notes match tag #${selectedTag}.`}
+                    ? `We searched everywhere for "${searchQuery}", but none of your notes contain that word.`
+                    : `No notes are tagged with #${selectedTag}.`}
                 </p>
               </div>
               <div className="flex flex-wrap justify-center gap-2 pt-1">
@@ -717,7 +804,7 @@ export default function Home() {
                           onClick={() => handleCopyNote(note)}
                           className="text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 p-2 sm:p-1.5 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-950/60 transition-colors cursor-pointer min-h-[36px] min-w-[36px] flex items-center justify-center"
                           aria-label={`Copy note: ${note.title}`}
-                          title={copiedId === note.id ? 'Copied to clipboard!' : 'Copy note content'}
+                          title={copiedId === note.id ? 'Copied to clipboard!' : 'Copy note text to share'}
                         >
                           {copiedId === note.id ? (
                             <span className="flex items-center text-[11px] font-semibold text-blue-600 dark:text-blue-400 gap-1 animate-in fade-in">
@@ -867,8 +954,13 @@ export default function Home() {
         </section>
 
         {/* Footer */}
-        <footer className="pt-6 border-t border-blue-100/60 dark:border-blue-950/60 text-center text-xs text-slate-400 dark:text-slate-500">
-          <p>Driftmark Noteapp · Crafted for seamless Markdown capture and instant tag discovery.</p>
+        <footer className="pt-6 border-t border-blue-100/60 dark:border-blue-950/60 text-center text-xs text-slate-400 dark:text-slate-500 space-y-1">
+          <p className="font-medium text-slate-500 dark:text-slate-400">
+            Driftmark Noteapp · Built to bring clarity to scattered thoughts.
+          </p>
+          <p>
+            Markdown supported · Offline browser storage · Instant tag filtering
+          </p>
         </footer>
       </main>
     </div>
