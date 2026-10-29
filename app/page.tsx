@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useTransition, useRef } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { checkNote, type Note } from './actions';
 
 export default function Home() {
@@ -271,9 +272,72 @@ export default function Home() {
                     {note.title}
                   </h3>
 
-                  <p className="text-sm text-zinc-700 dark:text-zinc-300 whitespace-pre-wrap leading-relaxed">
-                    {note.body}
-                  </p>
+                  <div className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed break-words">
+                    <ReactMarkdown
+                      components={{
+                        h1: ({ children }) => (
+                          <h1 className="text-xl font-bold text-zinc-950 dark:text-white mt-3 mb-1.5 first:mt-0">
+                            {children}
+                          </h1>
+                        ),
+                        h2: ({ children }) => (
+                          <h2 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 mt-2.5 mb-1 first:mt-0">
+                            {children}
+                          </h2>
+                        ),
+                        h3: ({ children }) => (
+                          <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-100 mt-2 mb-1 first:mt-0">
+                            {children}
+                          </h3>
+                        ),
+                        p: ({ children }) => (
+                          <p className="mb-2 last:mb-0 leading-relaxed">
+                            {children}
+                          </p>
+                        ),
+                        strong: ({ children }) => (
+                          <strong className="font-semibold text-zinc-950 dark:text-white">
+                            {children}
+                          </strong>
+                        ),
+                        ul: ({ children }) => (
+                          <ul className="list-disc list-inside space-y-1 my-2 text-zinc-700 dark:text-zinc-300">
+                            {children}
+                          </ul>
+                        ),
+                        ol: ({ children }) => (
+                          <ol className="list-decimal list-inside space-y-1 my-2 text-zinc-700 dark:text-zinc-300">
+                            {children}
+                          </ol>
+                        ),
+                        li: ({ children }) => (
+                          <li className="leading-relaxed">{children}</li>
+                        ),
+                        a: ({ href, children }) => (
+                          <a
+                            href={href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-indigo-600 dark:text-indigo-400 underline hover:text-indigo-500 transition-colors"
+                          >
+                            {children}
+                          </a>
+                        ),
+                        blockquote: ({ children }) => (
+                          <blockquote className="border-l-2 border-indigo-500 pl-3 my-2 italic text-zinc-600 dark:text-zinc-400">
+                            {children}
+                          </blockquote>
+                        ),
+                        code: ({ children }) => (
+                          <code className="px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-xs font-mono text-indigo-600 dark:text-indigo-400">
+                            {children}
+                          </code>
+                        ),
+                      }}
+                    >
+                      {note.body}
+                    </ReactMarkdown>
+                  </div>
 
                   {note.tags.length > 0 && (
                     <div className="flex flex-wrap gap-1.5 pt-2">
