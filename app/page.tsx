@@ -1,13 +1,38 @@
 'use client';
 
-import { useState, useTransition, useRef } from 'react';
+import { useState, useEffect, useTransition, useRef } from 'react';
 import { checkNote, type Note } from './actions';
 
 export default function Home() {
   const [notes, setNotes] = useState<Note[]>([]);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
   const formRef = useRef<HTMLFormElement>(null);
+
+  // Read localStorage inside useEffect, not during first render (as per SPEC)
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('driftmark_notes');
+      if (saved) {
+        setNotes(JSON.parse(saved));
+      }
+    } catch (e) {
+      console.error('Failed to load notes from localStorage:', e);
+    } finally {
+      setIsLoaded(true);
+    }
+  }, []);
+
+  // Save notes to localStorage whenever notes change after initial load
+  useEffect(() => {
+    if (!isLoaded) return;
+    try {
+      localStorage.setItem('driftmark_notes', JSON.stringify(notes));
+    } catch (e) {
+      console.error('Failed to save notes to localStorage:', e);
+    }
+  }, [notes, isLoaded]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
