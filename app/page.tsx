@@ -8,6 +8,7 @@ export default function Home() {
   const [notes, setNotes] = useState<Note[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
   const formRef = useRef<HTMLFormElement>(null);
@@ -17,10 +18,17 @@ export default function Home() {
     new Set(notes.flatMap((note) => note.tags))
   ).sort();
 
-  // Filter notes by selected tag
-  const filteredNotes = selectedTag
-    ? notes.filter((note) => note.tags.includes(selectedTag))
-    : notes;
+  // Filter notes by selected tag and search query (matches title or body)
+  const query = searchQuery.trim().toLowerCase();
+  const filteredNotes = notes.filter((note) => {
+    const matchesTag = selectedTag ? note.tags.includes(selectedTag) : true;
+    if (!matchesTag) return false;
+    if (!query) return true;
+    return (
+      note.title.toLowerCase().includes(query) ||
+      note.body.toLowerCase().includes(query)
+    );
+  });
 
   // Read localStorage inside useEffect, not during first render (as per SPEC)
   useEffect(() => {
@@ -241,12 +249,12 @@ export default function Home() {
 
         {/* Notes List */}
         <section className="space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="flex items-center gap-2">
               <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
                 Saved Notes
                 <span className="text-xs px-2 py-0.5 rounded-full bg-zinc-200/80 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 font-medium">
-                  {selectedTag ? `${filteredNotes.length} of ${notes.length}` : notes.length}
+                  {selectedTag || searchQuery ? `${filteredNotes.length} of ${notes.length}` : notes.length}
                 </span>
               </h2>
               {selectedTag && (
@@ -255,6 +263,44 @@ export default function Home() {
                 </span>
               )}
             </div>
+
+            {/* Search Input Bar */}
+            {notes.length > 0 && (
+              <div className="relative w-full sm:w-64">
+                <input
+                  id="search-notes-input"
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search title or body..."
+                  className="w-full pl-9 pr-8 py-1.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800/60 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 transition-all duration-150"
+                />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-4 h-4 text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21 21l-4.35-4.35M16.65 10.65a6 6 0 11-12 0 6 6 0 0112 0z"
+                  />
+                </svg>
+                {searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 text-xs cursor-pointer"
+                    aria-label="Clear search"
+                  >
+                    ✕
+                  </button>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Tags Filter Bar */}
@@ -319,17 +365,53 @@ export default function Home() {
               </p>
             </div>
           ) : filteredNotes.length === 0 ? (
-            <div className="text-center py-10 px-4 rounded-2xl border border-dashed border-zinc-300 dark:border-zinc-800 bg-white/40 dark:bg-zinc-900/40 space-y-2">
-              <p className="text-zinc-500 dark:text-zinc-400 text-sm">
-                No notes match tag <span className="font-semibold text-indigo-600 dark:text-indigo-400">#{selectedTag}</span>.
+            <div className="text-center py-10 px-4 rounded-2xl border border-dashed border-zinc-300 dark:border-zinc-800 bg-white/40 dark:bg-zinc-900/40 space-y-3">
+              <div className="mx-auto w-10 h-10 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-400">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-5 h-5"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21 21l-4.35-4.35M16.65 10.65a6 6 0 11-12 0 6 6 0 0112 0z"
+                  />
+                </svg>
+              </div>
+              <p className="text-zinc-700 dark:text-zinc-200 font-semibold text-base">
+                No notes match
               </p>
-              <button
-                type="button"
-                onClick={() => setSelectedTag(null)}
-                className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline font-medium cursor-pointer"
-              >
-                Clear filter (show All)
-              </button>
+              <p className="text-zinc-500 dark:text-zinc-400 text-sm">
+                {searchQuery && selectedTag
+                  ? `No notes match "${searchQuery}" with tag #${selectedTag}.`
+                  : searchQuery
+                  ? `No notes match "${searchQuery}". Try searching for another term.`
+                  : `No notes match tag #${selectedTag}.`}
+              </p>
+              <div className="flex justify-center gap-2 pt-1">
+                {searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchQuery('')}
+                    className="px-3 py-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-xs font-medium transition-colors cursor-pointer"
+                  >
+                    Clear search
+                  </button>
+                )}
+                {selectedTag && (
+                  <button
+                    type="button"
+                    onClick={() => setSelectedTag(null)}
+                    className="px-3 py-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-xs font-medium transition-colors cursor-pointer"
+                  >
+                    Clear tag filter (show All)
+                  </button>
+                )}
+              </div>
             </div>
           ) : (
             <div className="space-y-3">
