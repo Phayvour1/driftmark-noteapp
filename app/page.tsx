@@ -77,12 +77,12 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-zinc-50 via-white to-zinc-100 dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950 text-zinc-900 dark:text-zinc-100 py-10 px-4 sm:px-6 lg:px-8 selection:bg-indigo-500 selection:text-white transition-colors duration-300">
-      <main className="max-w-2xl mx-auto space-y-8">
-        {/* Driftmark Brand Header */}
-        <header className="border-b border-zinc-200/80 dark:border-zinc-800/80 pb-6">
+    <div className="min-h-screen bg-linear-to-b from-zinc-50 via-white to-zinc-100 dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950 text-zinc-900 dark:text-zinc-100 py-6 sm:py-10 pb-16 sm:pb-12 px-3.5 sm:px-6 lg:px-8 selection:bg-indigo-500 selection:text-white transition-colors duration-300">
+      <main className="max-w-2xl mx-auto space-y-6 sm:space-y-8">
+        {/* Driftmark Brand Header - Mobile Optimized */}
+        <header className="border-b border-zinc-200/80 dark:border-zinc-800/80 pb-5 sm:pb-6">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-400 p-0.5 shadow-sm shadow-indigo-500/20 flex items-center justify-center text-white font-bold transition-transform duration-300 hover:scale-105">
+            <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-400 p-0.5 shadow-sm shadow-indigo-500/20 flex items-center justify-center text-white font-bold transition-transform duration-300 hover:scale-105 shrink-0">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -91,36 +91,36 @@ export default function Home() {
                 strokeWidth="2.2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="w-5 h-5"
+                className="w-4 h-4 sm:w-5 sm:h-5"
               >
                 <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14.5l-4-2 2-4 4 2-2 4z" />
                 <path d="m14.5 9.5-5 5" />
               </svg>
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">
+            <div className="min-w-0">
+              <div className="flex items-center gap-2 flex-wrap">
+                <h1 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-zinc-900 dark:text-white truncate">
                   Driftmark
                 </h1>
-                <span className="px-2 py-0.5 text-xs font-semibold uppercase tracking-wider rounded-md bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200/60 dark:border-indigo-800/50">
+                <span className="px-2 py-0.5 text-[11px] sm:text-xs font-semibold uppercase tracking-wider rounded-md bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200/60 dark:border-indigo-800/50">
                   Noteapp
                 </span>
               </div>
-              <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+              <p className="mt-0.5 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-snug">
                 Write notes with titles, markdown content, and tags.
               </p>
             </div>
           </div>
         </header>
 
-        {/* Note Creation Form */}
-        <section className="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xs p-6 rounded-2xl border border-zinc-200/80 dark:border-zinc-800/80 shadow-xs transition-all duration-200 hover:shadow-md hover:border-zinc-300 dark:hover:border-zinc-700">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
+        {/* Note Creation Form - Mobile Optimized */}
+        <section className="bg-white/90 dark:bg-zinc-900/90 backdrop-blur-xs p-4 sm:p-6 rounded-2xl border border-zinc-200/80 dark:border-zinc-800/80 shadow-xs transition-all duration-200 hover:shadow-md hover:border-zinc-300 dark:hover:border-zinc-700">
+          <div className="flex items-center justify-between mb-3.5 sm:mb-4">
+            <h2 className="text-base sm:text-lg font-semibold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-indigo-500 animate-pulse"></span>
               Create a Note
             </h2>
-            <span className="text-xs text-zinc-400 dark:text-zinc-500">
+            <span className="text-[11px] sm:text-xs text-zinc-400 dark:text-zinc-500">
               Markdown supported
             </span>
           </div>
@@ -128,9 +128,9 @@ export default function Home() {
           {error && (
             <div
               role="alert"
-              className="mb-5 p-3.5 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/60 text-sm text-red-700 dark:text-red-300 flex items-center justify-between transition-all duration-200 animate-in fade-in slide-in-from-top-1"
+              className="mb-4 sm:mb-5 p-3 sm:p-3.5 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/60 text-xs sm:text-sm text-red-700 dark:text-red-300 flex items-center justify-between transition-all duration-200 animate-in fade-in slide-in-from-top-1"
             >
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2 min-w-0">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-4 h-4 text-red-500 shrink-0"
@@ -145,12 +145,12 @@ export default function Home() {
                   <line x1="12" y1="8" x2="12" y2="12" />
                   <line x1="12" y1="16" x2="12.01" y2="16" />
                 </svg>
-                <span className="font-medium">{error}</span>
+                <span className="font-medium truncate">{error}</span>
               </div>
               <button
                 type="button"
                 onClick={() => setError(null)}
-                className="text-red-500 hover:text-red-700 dark:hover:text-red-200 text-xs font-semibold ml-2 transition-colors cursor-pointer"
+                className="text-red-500 hover:text-red-700 dark:hover:text-red-200 text-xs font-semibold ml-2 transition-colors cursor-pointer shrink-0 py-1 px-1.5"
                 aria-label="Dismiss error"
               >
                 Dismiss
@@ -158,11 +158,11 @@ export default function Home() {
             </div>
           )}
 
-          <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
+          <form ref={formRef} onSubmit={handleSubmit} className="space-y-3.5 sm:space-y-4">
             <div>
               <label
                 htmlFor="note-title"
-                className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1"
+                className="block text-xs sm:text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1"
               >
                 Title <span className="text-red-500">*</span>
               </label>
@@ -171,14 +171,14 @@ export default function Home() {
                 name="title"
                 type="text"
                 placeholder="Note title"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50/50 dark:bg-zinc-800/50 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-hidden focus:bg-white dark:focus:bg-zinc-800 focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 text-sm transition-all duration-150"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50/50 dark:bg-zinc-800/50 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-hidden focus:bg-white dark:focus:bg-zinc-800 focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 text-base sm:text-sm transition-all duration-150 min-h-[44px]"
               />
             </div>
 
             <div>
               <label
                 htmlFor="note-body"
-                className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1"
+                className="block text-xs sm:text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1"
               >
                 Body <span className="text-red-500">*</span>
               </label>
@@ -187,14 +187,14 @@ export default function Home() {
                 name="body"
                 rows={5}
                 placeholder="Write your note here (supports Markdown: headings, bold, lists)..."
-                className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50/50 dark:bg-zinc-800/50 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-hidden focus:bg-white dark:focus:bg-zinc-800 focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 text-sm resize-y font-mono transition-all duration-150"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50/50 dark:bg-zinc-800/50 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-hidden focus:bg-white dark:focus:bg-zinc-800 focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 text-base sm:text-sm resize-y font-mono transition-all duration-150 min-h-[120px]"
               />
             </div>
 
             <div>
               <label
                 htmlFor="note-tags"
-                className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1"
+                className="block text-xs sm:text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1"
               >
                 Tags <span className="text-xs text-zinc-500">(comma-separated)</span>
               </label>
@@ -203,15 +203,15 @@ export default function Home() {
                 name="tags"
                 type="text"
                 placeholder="e.g. work, church, ideas"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50/50 dark:bg-zinc-800/50 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-hidden focus:bg-white dark:focus:bg-zinc-800 focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 text-sm transition-all duration-150"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-zinc-50/50 dark:bg-zinc-800/50 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-hidden focus:bg-white dark:focus:bg-zinc-800 focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 text-base sm:text-sm transition-all duration-150 min-h-[44px]"
               />
             </div>
 
-            <div className="pt-2 flex justify-end">
+            <div className="pt-1.5 sm:pt-2 flex justify-end">
               <button
                 type="submit"
                 disabled={isPending}
-                className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 text-white dark:text-zinc-900 font-medium text-sm transition-all duration-150 shadow-xs hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-6 py-3 sm:py-2.5 min-h-[44px] rounded-xl bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 text-white dark:text-zinc-900 font-medium text-base sm:text-sm transition-all duration-150 shadow-xs hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-2"
               >
                 {isPending ? (
                   <>
@@ -251,11 +251,11 @@ export default function Home() {
           </form>
         </section>
 
-        {/* Notes List */}
+        {/* Notes List - Mobile Optimized */}
         <section className="space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="flex items-center gap-2">
-              <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
+              <h2 className="text-lg sm:text-xl font-semibold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
                 Saved Notes
                 <span className="text-xs px-2 py-0.5 rounded-full bg-zinc-200/80 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 font-medium">
                   {selectedTag || searchQuery ? `${filteredNotes.length} of ${notes.length}` : notes.length}
@@ -268,7 +268,7 @@ export default function Home() {
               )}
             </div>
 
-            {/* Search Input Bar */}
+            {/* Search Input Bar - Touch Friendly on Phone */}
             {notes.length > 0 && (
               <div className="relative w-full sm:w-64">
                 <input
@@ -277,7 +277,7 @@ export default function Home() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search title or body..."
-                  className="w-full pl-9 pr-8 py-1.5 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800/60 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 transition-all duration-150"
+                  className="w-full pl-9 pr-9 py-2 sm:py-1.5 min-h-[44px] sm:min-h-[38px] rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800/60 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 text-base sm:text-sm focus:outline-hidden focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 transition-all duration-150"
                 />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -297,7 +297,7 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={() => setSearchQuery('')}
-                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 text-xs cursor-pointer"
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 p-1 text-sm cursor-pointer"
                     aria-label="Clear search"
                   >
                     ✕
@@ -307,17 +307,17 @@ export default function Home() {
             )}
           </div>
 
-          {/* Tags Filter Bar */}
+          {/* Tags Filter Bar - Responsive Wrappable Pills */}
           {allTags.length > 0 && (
-            <div className="flex flex-wrap items-center gap-1.5 p-3 rounded-xl bg-white/60 dark:bg-zinc-900/60 border border-zinc-200/80 dark:border-zinc-800/80">
-              <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400 mr-1">
-                Filter by tag:
+            <div className="flex flex-wrap items-center gap-1.5 p-2.5 sm:p-3 rounded-xl bg-white/70 dark:bg-zinc-900/70 border border-zinc-200/80 dark:border-zinc-800/80">
+              <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400 mr-1 shrink-0">
+                Filter:
               </span>
               <button
                 type="button"
                 id="tag-filter-all"
                 onClick={() => setSelectedTag(null)}
-                className={`px-3 py-1 rounded-lg text-xs font-medium transition-all duration-150 cursor-pointer ${
+                className={`px-3 py-1.5 sm:py-1 rounded-lg text-xs font-medium transition-all duration-150 cursor-pointer min-h-[34px] sm:min-h-0 flex items-center ${
                   selectedTag === null
                     ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 shadow-xs font-semibold'
                     : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700'
@@ -331,7 +331,7 @@ export default function Home() {
                   type="button"
                   id={`tag-filter-${tag}`}
                   onClick={() => setSelectedTag(tag === selectedTag ? null : tag)}
-                  className={`px-3 py-1 rounded-lg text-xs font-medium transition-all duration-150 cursor-pointer flex items-center gap-1.5 ${
+                  className={`px-3 py-1.5 sm:py-1 rounded-lg text-xs font-medium transition-all duration-150 cursor-pointer flex items-center gap-1.5 min-h-[34px] sm:min-h-0 ${
                     selectedTag === tag
                       ? 'bg-indigo-600 text-white shadow-xs shadow-indigo-500/30 font-semibold'
                       : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700'
@@ -347,7 +347,7 @@ export default function Home() {
           )}
 
           {notes.length === 0 ? (
-            <div className="text-center py-12 px-4 rounded-2xl border border-dashed border-zinc-300 dark:border-zinc-800 bg-white/40 dark:bg-zinc-900/40">
+            <div className="text-center py-10 sm:py-12 px-4 rounded-2xl border border-dashed border-zinc-300 dark:border-zinc-800 bg-white/40 dark:bg-zinc-900/40">
               <div className="mx-auto w-10 h-10 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-400 mb-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -389,19 +389,19 @@ export default function Home() {
               <p className="text-zinc-700 dark:text-zinc-200 font-semibold text-base">
                 No notes match
               </p>
-              <p className="text-zinc-500 dark:text-zinc-400 text-sm">
+              <p className="text-zinc-500 dark:text-zinc-400 text-xs sm:text-sm">
                 {searchQuery && selectedTag
                   ? `No notes match "${searchQuery}" with tag #${selectedTag}.`
                   : searchQuery
                   ? `No notes match "${searchQuery}". Try searching for another term.`
                   : `No notes match tag #${selectedTag}.`}
               </p>
-              <div className="flex justify-center gap-2 pt-1">
+              <div className="flex flex-wrap justify-center gap-2 pt-1">
                 {searchQuery && (
                   <button
                     type="button"
                     onClick={() => setSearchQuery('')}
-                    className="px-3 py-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-xs font-medium transition-colors cursor-pointer"
+                    className="px-3.5 py-2 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-xs font-medium transition-colors cursor-pointer min-h-[36px]"
                   >
                     Clear search
                   </button>
@@ -410,7 +410,7 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={() => setSelectedTag(null)}
-                    className="px-3 py-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-xs font-medium transition-colors cursor-pointer"
+                    className="px-3.5 py-2 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-xs font-medium transition-colors cursor-pointer min-h-[36px]"
                   >
                     Clear tag filter (show All)
                   </button>
@@ -418,21 +418,21 @@ export default function Home() {
               </div>
             </div>
           ) : (
-            <div className="space-y-3">
+            <div className="space-y-3 sm:space-y-3.5">
               {filteredNotes.map((note) => (
                 <article
                   key={note.id}
-                  className="p-5 rounded-2xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-zinc-900 shadow-xs space-y-2.5 transition-all duration-200 hover:shadow-md hover:border-zinc-300 dark:hover:border-zinc-700 hover:-translate-y-0.5"
+                  className="p-4 sm:p-5 rounded-2xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white dark:bg-zinc-900 shadow-xs space-y-2.5 transition-all duration-200 hover:shadow-md hover:border-zinc-300 dark:hover:border-zinc-700 hover:-translate-y-0.5 overflow-hidden"
                 >
                   <div className="flex items-start justify-between gap-3">
-                    <h3 className="text-lg font-semibold text-zinc-900 dark:text-white">
+                    <h3 className="text-base sm:text-lg font-semibold text-zinc-900 dark:text-white break-words">
                       {note.title}
                     </h3>
                     <button
                       type="button"
                       id={`delete-note-${note.id}`}
                       onClick={() => handleDelete(note.id)}
-                      className="text-zinc-400 hover:text-red-600 dark:hover:text-red-400 p-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors cursor-pointer shrink-0"
+                      className="text-zinc-400 hover:text-red-600 dark:hover:text-red-400 p-2 sm:p-1.5 -mr-1 -mt-1 sm:mr-0 sm:mt-0 rounded-lg hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors cursor-pointer shrink-0 min-h-[38px] min-w-[38px] flex items-center justify-center"
                       aria-label={`Delete note: ${note.title}`}
                       title="Delete note"
                     >
@@ -453,21 +453,21 @@ export default function Home() {
                     </button>
                   </div>
 
-                  <div className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed break-words">
+                  <div className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed break-words overflow-x-auto">
                     <ReactMarkdown
                       components={{
                         h1: ({ children }) => (
-                          <h1 className="text-xl font-bold text-zinc-950 dark:text-white mt-3 mb-1.5 first:mt-0">
+                          <h1 className="text-lg sm:text-xl font-bold text-zinc-950 dark:text-white mt-3 mb-1.5 first:mt-0">
                             {children}
                           </h1>
                         ),
                         h2: ({ children }) => (
-                          <h2 className="text-lg font-bold text-zinc-900 dark:text-zinc-100 mt-2.5 mb-1 first:mt-0">
+                          <h2 className="text-base sm:text-lg font-bold text-zinc-900 dark:text-zinc-100 mt-2.5 mb-1 first:mt-0">
                             {children}
                           </h2>
                         ),
                         h3: ({ children }) => (
-                          <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-100 mt-2 mb-1 first:mt-0">
+                          <h3 className="text-sm sm:text-base font-semibold text-zinc-900 dark:text-zinc-100 mt-2 mb-1 first:mt-0">
                             {children}
                           </h3>
                         ),
@@ -527,7 +527,7 @@ export default function Home() {
                           key={tag}
                           type="button"
                           onClick={() => setSelectedTag(tag === selectedTag ? null : tag)}
-                          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium transition-colors cursor-pointer ${
+                          className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium transition-colors cursor-pointer min-h-[28px] ${
                             selectedTag === tag
                               ? 'bg-indigo-600 text-white border border-indigo-600 shadow-xs'
                               : 'bg-zinc-100 dark:bg-zinc-800/90 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700/80 hover:border-indigo-400 dark:hover:border-indigo-500'
